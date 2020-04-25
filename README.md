@@ -1,6 +1,6 @@
 # Intructions for building NeoOffice 2017
 
-Important: NeoOffice 2015 will build on **macOS 10.12 Sierra or macOS 10.14 Mojave only**.
+Important: NeoOffice 2017 will build on **macOS 10.12 Sierra or macOS 10.14 Mojave only**.
 
 ## Getting NeoOffice 2017 sources
 
@@ -49,9 +49,9 @@ After running the above command, add "/opt/local/bin" to the end of your shell's
    csrutil disable
 </pre>
 
-## Build NeoOffice 2015
+## Build NeoOffice 2017
 
-Build NeoOffice 2015 by invoking the following commands:
+Build NeoOffice 2017 by invoking the following commands:
 
 <pre>
    cd /absolute/path/of/extracted/source
