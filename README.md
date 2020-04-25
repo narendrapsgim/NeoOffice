@@ -1,24 +1,26 @@
-# Intructions for building NeoOffice 3.4.1
+# Intructions for building NeoOffice 2015
 
-Important: NeoOffice 3.4.1 will build on **Mac OS X 10.6 Snow Leopard for Intel only**.
+Important: NeoOffice 2015 will build on **Mac OS X 10.8 Mountain Lion only**.
 
-## Getting NeoOffice 3.4.1 sources
+## Getting NeoOffice 2015 sources
 
-Download and extract the NeoOffice-3_4_1-28.tar.gz file from https://github.com/neooffice/NeoOffice/releases.
+Download and extract the NeoOffice-2015_12.tar.gz file from https://github.com/neooffice/NeoOffice/releases.
 
 ## Install build dependencies
 
-1. Make sure that you have booted Mac OS X 10.6 into 32 bit mode by executing the following command and rebooting:
+1. Make sure that you have downloaded and installed the following dependencies from http://developer.apple.com/ website:
 
-<pre>
-   sudo systemsetup -setkernelbootarchitecture i386
-</pre>
+   Xcode Tools v4.6.3
 
-2. Make sure that you have downloaded and installed the following dependencies from http://developer.apple.com/ website. Note: NeoOffice 3.4.1 will not build if Xcode 4.x is installed:
+   After installing Xcode, install the XCode Command Line Tools by launching XCode and selecting the Xcode :: Preferences menu. In the dialog that appears, click on the Downloads tab and press the "Install" button for the "Command Line Tools" option.
 
-   Xcode Tools v3.2.6
+   Warning: do *not* install Xcode 5 or a separately downloaded command line tools package as it will cause the "gcc" and "g++" to really use the clang compiler instead of the gcc compiler.
 
-3. Make sure that you have installed the "gcp" and "pkg-config" commands. You can download, compile, and install these commands by downloading, compiling, and installing the following packages from the http://www.macports.org/ website. Note that you will need download and install the latest MacPorts Snow Leopard package to install MacPorts "port" command. The "port" command is then used to do the downloading, compiling, and installation of the following packages:
+2. Download and install the Apple's Java 1.6 Development Kit (JDK) from the following URL. Note: the build will ignore Oracle's JDKs:
+
+   http://support.apple.com/kb/DL1572
+
+3. Make sure that you have installed the "gcp" and "pkg-config" commands. You can download, compile, and install these commands by downloading, compiling, and installing the following packages from the http://www.macports.org/ website. Note that you will need download and install the latest MacPorts Mountain Lion package to install MacPorts "port" command. The "port" command is then used to do the downloading, compiling, and installation of the following packages:
 
 <pre>
    sudo /opt/local/bin/port install coreutils
@@ -27,13 +29,10 @@ Download and extract the NeoOffice-3_4_1-28.tar.gz file from https://github.com/
    sudo /opt/local/bin/port install gperf
    sudo /opt/local/bin/port install flex
    sudo /opt/local/bin/port install wget
+   sudo /opt/local/bin/port install gnutar
 </pre>
 
-   After running the above commands, execute the following command to ensure that 32 bit versions of the packages are available otherwise the build will fail:
-
-<pre>
-   sudo /opt/local/bin/port upgrade --enforce-variants active +universal 
-</pre>
+   After running the above command, add "/opt/local/bin" to the end of your shell's PATH environment variable so that the build can find the "autoconf" and other commands.
 
 4. Make sure that you have downloaded and installed the following Perl module from the http://www.cpan.org/modules/index.html website. Note that you will need to follow the instructions on the website to download and install the Archive::Zip module:
 
@@ -43,9 +42,9 @@ Download and extract the NeoOffice-3_4_1-28.tar.gz file from https://github.com/
 
    http://subversion.tigris.org/project_packages.html
 
-## Build NeoOffice 3.4.1
+## Build NeoOffice 2015
 
-Build NeoOffice 3.4.1 by invoking the following commands:
+Build NeoOffice 2015 by invoking the following commands:
 
 <pre>
    cd /absolute/path/of/extracted/source
