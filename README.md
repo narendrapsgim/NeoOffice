@@ -56,5 +56,4 @@ If the build was successful, you should find the following files:
 
 <pre>
    /absolute/path/of/extracted/source/install*/*.dmg 
-
 </pre>
