@@ -1,46 +1,53 @@
-# Intructions for building NeoOffice 2015
+# Intructions for building NeoOffice 2017
 
-Important: NeoOffice 2015 will build on **Mac OS X 10.8 Mountain Lion only**.
+Important: NeoOffice 2015 will build on **macOS 10.12 Sierra or macOS 10.14 Mojave only**.
 
-## Getting NeoOffice 2015 sources
+## Getting NeoOffice 2017 sources
 
-Download and extract the NeoOffice-2015_12.tar.gz file from https://github.com/neooffice/NeoOffice/releases.
+Download and extract the NeoOffice-2017_22.tar.gz file from https://github.com/neooffice/NeoOffice/releases.
 
 ## Install build dependencies
 
 1. Make sure that you have downloaded and installed the following dependencies from http://developer.apple.com/ website:
 
-   Xcode Tools v4.6.3
+   + macOS 10.12 Sierra:
+     - Xcode v8.3.3
+     - Command Line Tools for Xcode v8.3.2
+   + macOS 10.14 Mojave:
+     - Xcode v10.3
+     - Command Line Tools for Xcode v10.3
 
-   After installing Xcode, install the XCode Command Line Tools by launching XCode and selecting the Xcode :: Preferences menu. In the dialog that appears, click on the Downloads tab and press the "Install" button for the "Command Line Tools" option.
+2. Download and install Oracle's Java 1.8 Development Kit (JDK) from the following URL:
 
-   Warning: do *not* install Xcode 5 or a separately downloaded command line tools package as it will cause the "gcc" and "g++" to really use the clang compiler instead of the gcc compiler.
+   http://www.neooffice.org/neojava/javadownload.php
 
-2. Download and install the Apple's Java 1.6 Development Kit (JDK) from the following URL. Note: the build will ignore Oracle's JDKs:
+   Important: the build will fail if Oracle's Java 9 or 10 are installed so be sure to delete such versions from the /Library/Java/JavaVirtualMachines folder before starting the build.
 
-   http://support.apple.com/kb/DL1572
-
-3. Make sure that you have installed the "gcp" and "pkg-config" commands. You can download, compile, and install these commands by downloading, compiling, and installing the following packages from the http://www.macports.org/ website. Note that you will need download and install the latest MacPorts Mountain Lion package to install MacPorts "port" command. The "port" command is then used to do the downloading, compiling, and installation of the following packages:
+3. Install the following Mac Ports packages by downloading, compiling, and installing the following packages from the http://www.macports.org/ website. Note that you will need download and install the latest MacPorts package to install the MacPorts "port" command. The "port" command is then used to do the downloading, compiling, and installation of the following packages:
 
 <pre>
-   sudo /opt/local/bin/port install coreutils
-   sudo /opt/local/bin/port install pkgconfig
-   sudo /opt/local/bin/port install libIDL
-   sudo /opt/local/bin/port install gperf
-   sudo /opt/local/bin/port install flex
-   sudo /opt/local/bin/port install wget
-   sudo /opt/local/bin/port install gnutar
+   sudo /opt/local/bin/port install autoconf -x11
+   sudo /opt/local/bin/port install automake -x11
+   sudo /opt/local/bin/port install cvs -x11
+   sudo /opt/local/bin/port install gnutar -x11
+   sudo /opt/local/bin/port install xz -x11
 </pre>
 
    After running the above command, add "/opt/local/bin" to the end of your shell's PATH environment variable so that the build can find the "autoconf" and other commands.
 
-4. Make sure that you have downloaded and installed the following Perl module from the http://www.cpan.org/modules/index.html website. Note that you will need to follow the instructions on the website to download and install the Archive::Zip module:
+After running the above command, add "/opt/local/bin" to the end of your shell's PATH environment variable so that the build can all of the commands installed by /opt/local/bin/port command in the previous step.
 
-   Archive::Zip
+4. Installed the Perl Archive::Zip module using the following command. You may need to run this command more than once as the unit tests may fail the first time that you run it:
 
-5. Make sure that you have downloaded and installed the Subversion client and have the "svn" command in your PATH. Subversion binaries can be downloaded from here:
+<pre>
+   sudo cpan -i Archive::Zip
+</pre>
 
-   http://subversion.tigris.org/project_packages.html
+5. Disable System Integrity Protection (SIP). SIP must be disabled as it causes exporting DYLD_* environment variables in makefiles to fail which will break the build. To disable SIP, reboot into Recovery mode, run the following command in the Terminal, and then reboot normally:
+
+<pre>
+   csrutil disable
+</pre>
 
 ## Build NeoOffice 2015
 
@@ -48,8 +55,10 @@ Build NeoOffice 2015 by invoking the following commands:
 
 <pre>
    cd /absolute/path/of/extracted/source
-   make GNUCP=/absolute/path/of/your/gcp/command LIBIDL_CONFIG=/absolute/path/of/your/libIDL-config-2/command PKG_CONFIG=/absolute/path/of/your/pkg-config/command
+   make
 </pre>
+
+Important note: if the build fails in the build.neo_tests make target, uncheck iCloud Drive in the System Preferences iCloud panel and reinvoke the above commands to continue the build.
 
 If the build was successful, you should find the following files:
 
